@@ -9,26 +9,26 @@ const STORAGE_KEY = "2104events:theme";
 type Stored = { theme: Theme; palette: Palette };
 
 function read(): Stored {
-  if (typeof window === "undefined") return { theme: "light", palette: "warm" };
+  if (typeof window === "undefined") return { theme: "light", palette: "sage" };
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { theme: "light", palette: "warm" };
+    if (!raw) return { theme: "light", palette: "sage" };
     const parsed = JSON.parse(raw) as Partial<Stored>;
     return {
       theme: parsed.theme === "dark" ? "dark" : "light",
       palette:
         parsed.palette === "sage" || parsed.palette === "ink"
           ? parsed.palette
-          : "warm",
+          : "sage",
     };
   } catch {
-    return { theme: "light", palette: "warm" };
+    return { theme: "light", palette: "sage" };
   }
 }
 
 export function useTheme() {
   const [theme, setThemeState] = useState<Theme>("light");
-  const [palette, setPaletteState] = useState<Palette>("warm");
+  const [palette, setPaletteState] = useState<Palette>("sage");
 
   useEffect(() => {
     const initial = read();

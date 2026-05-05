@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { fraunces, geist, mono } from "./fonts";
 import LenisRoot from "@/components/chrome/LenisRoot";
+import CursorDot from "@/components/primitives/CursorDot";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({
     >
       <body>
         <LenisRoot>{children}</LenisRoot>
+        <CursorDot />
       </body>
     </html>
   );

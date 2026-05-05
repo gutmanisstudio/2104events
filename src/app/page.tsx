@@ -1,33 +1,24 @@
-"use client";
-
-import { useTheme, type Theme, type Palette } from "@/hooks/useTheme";
-import { useLocale, type Lang } from "@/hooks/useLocale";
-
-const swatchKeys: Array<{ key: string; varName: string; label: string }> = [
-  { key: "bg", varName: "--bg", label: "bg" },
-  { key: "bg-2", varName: "--bg-2", label: "bg-2" },
-  { key: "fg", varName: "--fg", label: "fg" },
-  { key: "fg-soft", varName: "--fg-soft", label: "fg-soft" },
-  { key: "fg-mute", varName: "--fg-mute", label: "fg-mute" },
-  { key: "accent", varName: "--accent", label: "accent" },
-];
+import HandNote from "@/components/primitives/HandNote";
+import Media from "@/components/primitives/Media";
+import Polaroid from "@/components/primitives/Polaroid";
+import Reveal from "@/components/primitives/Reveal";
+import SectionRule from "@/components/primitives/SectionRule";
+import StickyNote from "@/components/primitives/StickyNote";
+import { MEDIA } from "@/content/media";
 
 export default function Home() {
-  const [theme, setTheme, palette, setPalette] = useTheme();
-  const [lang, setLang] = useLocale();
-
   return (
     <main
       className="min-h-screen px-6 py-20 mx-auto"
-      style={{ maxWidth: 960 }}
+      style={{ maxWidth: 1200 }}
     >
       <header className="mb-16">
         <p className="mono mb-4" style={{ color: "var(--fg-mute)" }}>
-          token smoke-test · prompt 02
+          primitives gallery · prompt 03
         </p>
         <h1
           className="font-serif text-6xl"
-          style={{ letterSpacing: "-0.04em" }}
+          style={{ letterSpacing: "-0.04em", fontWeight: 300 }}
         >
           Events composed,{" "}
           <em
@@ -37,131 +28,149 @@ export default function Home() {
             not assembled.
           </em>
         </h1>
+        <p className="mt-4 max-w-prose" style={{ color: "var(--fg-soft)" }}>
+          A paragraph that contains a <HandNote>we cried at this one ♥</HandNote>{" "}
+          inline note, to demonstrate the squiggle underline and italic accent
+          rendering at body-text scale.
+        </p>
       </header>
 
-      <section className="mb-12">
-        <p className="mono mb-3" style={{ color: "var(--fg-mute)" }}>
-          theme · palette · lang
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {(["light", "dark"] as Theme[]).map((t) => (
-            <ToggleBtn
-              key={t}
-              active={theme === t}
-              onClick={() => setTheme(t)}
-            >
-              {t}
-            </ToggleBtn>
-          ))}
-          <span style={{ width: 16 }} />
-          {(["warm", "sage", "ink"] as Palette[]).map((p) => (
-            <ToggleBtn
-              key={p}
-              active={palette === p}
-              onClick={() => setPalette(p)}
-            >
-              {p}
-            </ToggleBtn>
-          ))}
-          <span style={{ width: 16 }} />
-          {(["EN", "NO"] as Lang[]).map((l) => (
-            <ToggleBtn
-              key={l}
-              active={lang === l}
-              onClick={() => setLang(l)}
-            >
-              {l}
-            </ToggleBtn>
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <p className="mono mb-3" style={{ color: "var(--fg-mute)" }}>
-          swatches (live tokens)
-        </p>
-        <div
-          className="grid gap-3"
-          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))" }}
-        >
-          {swatchKeys.map((s) => (
-            <div
-              key={s.key}
-              className="border-paper rounded-md overflow-hidden"
-              style={{ background: "var(--bg-2)" }}
-            >
-              <div
-                style={{
-                  background: `var(${s.varName})`,
-                  height: 80,
-                }}
-              />
-              <div className="p-3">
-                <p
-                  className="mono"
-                  style={{ color: "var(--fg-mute)", fontSize: 10 }}
-                >
-                  {s.label}
-                </p>
-                <p style={{ color: "var(--fg)", fontSize: 13 }}>
-                  {s.varName}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-16 grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
-        <div
-          className="img-ph rounded-md"
-          data-caption="placeholder · img-ph"
-          style={{ aspectRatio: "4 / 3" }}
-        />
-        <div className="shadow-polaroid border-paper rounded-md p-2 pb-8" style={{ background: "var(--bg-2)" }}>
-          <div
-            className="img-ph rounded-sm"
-            data-caption="polaroid sample"
-            style={{ aspectRatio: "1" }}
+      <SectionRule label="POLAROIDS" />
+      <section
+        className="grid gap-8 my-12 items-end"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}
+      >
+        <Reveal delay={0}>
+          <Polaroid
+            src={MEDIA.babyshower_1}
+            label="Frogner · 03.25"
+            rotate={-3}
+            width={240}
           />
-          <p
-            className="mono mt-3 text-center"
-            style={{ color: "var(--fg-mute)" }}
-          >
-            polaroid · shadow-polaroid
-          </p>
-        </div>
+        </Reveal>
+        <Reveal delay={120}>
+          <Polaroid
+            src={MEDIA.babyshower_2}
+            label="A long ivory table"
+            rotate={0}
+            width={240}
+          />
+        </Reveal>
+        <Reveal delay={240}>
+          <Polaroid
+            video={MEDIA.hero_video_3}
+            label="Pink reception · 08.24"
+            rotate={4}
+            width={240}
+          />
+        </Reveal>
       </section>
 
-      <footer className="mt-20">
-        <p className="mono" style={{ color: "var(--fg-mute)" }}>
-          select me — selection should use the accent color.
-        </p>
-      </footer>
-    </main>
-  );
-}
+      <SectionRule label="STICKY NOTES" />
+      <section className="flex flex-wrap gap-6 my-12">
+        <StickyNote rotate={-3} color="#FFF8E0">
+          <p className="mono" style={{ fontSize: 9, opacity: 0.55 }}>
+            FROM JOSE
+          </p>
+          <p className="serif" style={{ fontSize: 14, marginTop: 4 }}>
+            we love wild ideas ✦
+          </p>
+        </StickyNote>
+        <StickyNote rotate={2} color="#F8E5C8">
+          <p className="mono" style={{ fontSize: 9, opacity: 0.55 }}>
+            REMINDER
+          </p>
+          <p className="serif" style={{ fontSize: 14, marginTop: 4 }}>
+            check the 22:47 light
+          </p>
+        </StickyNote>
+        <StickyNote rotate={-1} color="#D9E8D5">
+          <p className="mono" style={{ fontSize: 9, opacity: 0.55 }}>
+            DETAIL
+          </p>
+          <p className="serif" style={{ fontSize: 14, marginTop: 4 }}>
+            ivory linen + sage runner
+          </p>
+        </StickyNote>
+        <StickyNote rotate={3} color="#E8E1F4">
+          <p className="mono" style={{ fontSize: 9, opacity: 0.55 }}>
+            VENUE
+          </p>
+          <p className="serif" style={{ fontSize: 14, marginTop: 4 }}>
+            Lakkegata 4 — back room
+          </p>
+        </StickyNote>
+      </section>
 
-function ToggleBtn({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="mono px-3 py-2 rounded-md transition-colors"
-      style={{
-        background: active ? "var(--accent)" : "var(--bg-2)",
-        color: active ? "var(--bg)" : "var(--fg)",
-        border: "1px solid var(--line-c)",
-      }}
-    >
-      {children}
-    </button>
+      <SectionRule label="MEDIA" />
+      <section
+        className="grid gap-6 my-12"
+        style={{ gridTemplateColumns: "1fr 1fr" }}
+      >
+        <Media
+          src={MEDIA.babyshower_1}
+          caption="STUDIO · BABY B · MAR 2025"
+          ratio="4 / 5"
+        />
+        <Media
+          video={MEDIA.hero_video}
+          caption="WHITE & GOLD RECEPTION · LIVE"
+          ratio="4 / 5"
+        />
+      </section>
+
+      <SectionRule label="REVEAL DEMO" />
+      <Reveal delay={200}>
+        <h2
+          className="font-serif text-5xl my-12"
+          style={{ letterSpacing: "-0.03em", fontWeight: 300, color: "var(--fg)" }}
+        >
+          Scroll-revealed{" "}
+          <em className="italic" style={{ color: "var(--accent)" }}>
+            heading
+          </em>
+          .
+        </h2>
+      </Reveal>
+
+      <SectionRule label="HOVER DOTS" />
+      <section className="my-12 flex flex-wrap gap-4">
+        <button
+          className="mono px-4 py-2"
+          style={{
+            background: "var(--accent)",
+            color: "var(--bg)",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          a button
+        </button>
+        <a
+          href="#"
+          className="mono px-4 py-2"
+          style={{
+            border: "1px solid var(--line-c)",
+            color: "var(--fg)",
+            textDecoration: "none",
+          }}
+        >
+          a link
+        </a>
+        <span
+          data-hover
+          className="mono px-4 py-2"
+          style={{
+            border: "1px solid var(--line-c)",
+            color: "var(--fg-soft)",
+            cursor: "pointer",
+          }}
+        >
+          a [data-hover] span
+        </span>
+      </section>
+
+      <SectionRule />
+    </main>
   );
 }
