@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { fraunces, geist, mono } from "./fonts";
 import LenisRoot from "@/components/chrome/LenisRoot";
 import CursorDot from "@/components/primitives/CursorDot";
+import Nav from "@/components/chrome/Nav";
+import Footer from "@/components/chrome/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,7 +21,11 @@ export default function RootLayout({
       className={`${fraunces.variable} ${geist.variable} ${mono.variable}`}
     >
       <body>
-        <LenisRoot>{children}</LenisRoot>
+        <LenisRoot>
+          <Nav />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+        </LenisRoot>
         <CursorDot />
       </body>
     </html>
