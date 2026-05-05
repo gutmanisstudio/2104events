@@ -42,7 +42,7 @@ export default function Reveal({
         ...style,
         opacity: seen ? 1 : 0,
         transform: seen ? "translateY(0)" : "translateY(24px)",
-        transition: `opacity .9s cubic-bezier(.2,.7,.3,1) ${delay}ms, transform .9s cubic-bezier(.2,.7,.3,1) ${delay}ms`,
+        transition: `opacity .5s cubic-bezier(.2,.7,.3,1) ${delay}ms, transform .5s cubic-bezier(.2,.7,.3,1) ${delay}ms`,
       }}
     >
       {children}

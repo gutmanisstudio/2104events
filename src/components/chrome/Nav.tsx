@@ -99,6 +99,12 @@ export default function Nav() {
           <Link
             href="/"
             data-hover
+            onClick={(e) => {
+              if (pathname === "/") {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
             style={{
               display: "flex",
               alignItems: "baseline",
