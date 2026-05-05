@@ -2,6 +2,7 @@
 
 @theme inline {
   --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
   --color-fg: var(--fg);
   --color-fg-soft: var(--fg-soft);
   --color-fg-mute: var(--fg-mute);
@@ -12,6 +13,44 @@
   --font-mono: var(--font-mono), ui-monospace, monospace;
 }
 
+:root {
+  /* Warm Scandinavian palette (default) */
+  --cream:        #FAF7F2;
+  --cream-2:      #F2EDE3;
+  --ink:          #2B2A28;
+  --ink-soft:     #524F49;
+  --ink-mute:     #8B8780;
+  --bronze:       #6B5840;
+  --bronze-soft:  #A08868;
+  --line:         rgba(43, 42, 40, 0.12);
+  --line-soft:    rgba(43, 42, 40, 0.06);
+
+  /* Dark variant (warm-toned, NOT inverted) */
+  --d-bg:     #18160F;
+  --d-bg-2:   #221F18;
+  --d-fg:     #EDE7DA;
+  --d-fg-soft:#B8B0A0;
+  --d-fg-mute:#8B8270;
+  --d-bronze: #B8945F;
+  --d-line:   rgba(237, 231, 218, 0.12);
+
+  /* Sage palette */
+  --s-bg:     #F5F2EA;
+  --s-bg-2:   #EBE6D8;
+  --s-fg:     #1F2620;
+  --s-fg-soft:#3A4239;
+  --s-fg-mute:#6B7268;
+  --s-accent: #6B7F5C;
+
+  /* Ink palette (high-contrast monochrome) */
+  --i-bg:     #FFFFFF;
+  --i-bg-2:   #F4F2EE;
+  --i-fg:     #0A0A0A;
+  --i-fg-soft:#2A2A2A;
+  --i-fg-mute:#767574;
+  --i-accent: #0A0A0A;
+}
+
 * { box-sizing: border-box; }
 html, body {
   margin: 0; padding: 0;
@@ -20,4 +59,95 @@ html, body {
   font-size: 16px; line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Semantic mapping — body data-attrs swap palette/theme */
+body {
+  --bg: var(--cream);
+  --bg-2: var(--cream-2);
+  --fg: var(--ink);
+  --fg-soft: var(--ink-soft);
+  --fg-mute: var(--ink-mute);
+  --accent: var(--bronze);
+  --line-c: var(--line);
+}
+body[data-theme="dark"] {
+  --bg: var(--d-bg);
+  --bg-2: var(--d-bg-2);
+  --fg: var(--d-fg);
+  --fg-soft: var(--d-fg-soft);
+  --fg-mute: var(--d-fg-mute);
+  --accent: var(--d-bronze);
+  --line-c: var(--d-line);
+}
+body[data-palette="sage"] {
+  --bg: var(--s-bg);
+  --bg-2: var(--s-bg-2);
+  --fg: var(--s-fg);
+  --fg-soft: var(--s-fg-soft);
+  --fg-mute: var(--s-fg-mute);
+  --accent: var(--s-accent);
+}
+body[data-palette="ink"] {
+  --bg: var(--i-bg);
+  --bg-2: var(--i-bg-2);
+  --fg: var(--i-fg);
+  --fg-soft: var(--i-fg-soft);
+  --fg-mute: var(--i-fg-mute);
+  --accent: var(--i-accent);
+}
+
+::selection { background: var(--accent); color: var(--bg); }
+
+button, input, select, textarea { font-family: inherit; }
+
+.serif { font-family: var(--font-serif), "Times New Roman", serif; font-weight: 300; letter-spacing: -0.02em; }
+.mono  { font-family: var(--font-mono), ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* Image placeholder — striped warm gradient with monospace caption */
+.img-ph {
+  position: relative;
+  background:
+    repeating-linear-gradient(135deg,
+      rgba(107, 88, 64, 0.08) 0,
+      rgba(107, 88, 64, 0.08) 1px,
+      transparent 1px,
+      transparent 7px),
+    linear-gradient(160deg, var(--bg-2) 0%, color-mix(in oklab, var(--accent) 8%, var(--bg-2)) 100%);
+  color: var(--fg-soft);
+  overflow: hidden;
+}
+.img-ph::after {
+  content: attr(data-caption);
+  position: absolute; bottom: 12px; left: 12px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+  background: color-mix(in oklab, var(--bg) 70%, transparent);
+  padding: 4px 8px;
+  backdrop-filter: blur(6px);
+}
+
+/* Cursor dot */
+.cursor-dot {
+  position: fixed; top: 0; left: 0; width: 8px; height: 8px;
+  background: var(--accent); border-radius: 50%; pointer-events: none;
+  z-index: 9999; mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width .25s, height .25s, opacity .2s;
+}
+.cursor-dot.hover { width: 36px; height: 36px; opacity: .6; }
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@layer utilities {
+  .shadow-polaroid { box-shadow: 0 14px 32px -10px rgba(0,0,0,0.22); }
+  .shadow-sticky   { box-shadow: 0 6px 20px -6px rgba(0,0,0,0.18); }
+  .border-paper    { border: 1px solid rgba(0,0,0,0.06); }
 }
