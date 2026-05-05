@@ -1,10 +1,9 @@
 "use client";
-import { useEffect, useRef, useState, type CSSProperties, type JSX } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 type RevealProps = {
   children: React.ReactNode;
   delay?: number;
-  as?: keyof JSX.IntrinsicElements;
   className?: string;
   style?: CSSProperties;
 };
@@ -12,11 +11,10 @@ type RevealProps = {
 export default function Reveal({
   children,
   delay = 0,
-  as: As = "div",
   className,
   style,
 }: RevealProps) {
-  const ref = useRef<HTMLElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const [seen, setSeen] = useState(false);
 
   useEffect(() => {
@@ -36,11 +34,9 @@ export default function Reveal({
     return () => io.disconnect();
   }, []);
 
-  const Tag = As as keyof JSX.IntrinsicElements;
-
   return (
-    <Tag
-      ref={ref as React.RefObject<HTMLElement> as never}
+    <div
+      ref={ref}
       className={className}
       style={{
         ...style,
@@ -50,6 +46,6 @@ export default function Reveal({
       }}
     >
       {children}
-    </Tag>
+    </div>
   );
 }
