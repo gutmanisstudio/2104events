@@ -1,11 +1,15 @@
+import PageHeader from "@/components/pages/PageHeader";
+import Services from "@/components/home/Services";
+
 export default function ServicesPage() {
   return (
-    <section className="px-6" style={{ paddingTop: 180, paddingBottom: 60 }}>
-      <div style={{ maxWidth: 1320, margin: "0 auto" }}>
-        <p className="mono" style={{ color: "var(--fg-mute)" }}>
-          Services — coming next
-        </p>
-      </div>
-    </section>
+    <>
+      <PageHeader
+        eyebrow="Services · 2104events"
+        title={"What we do,\nin six rooms."}
+        lede="Each service below is a separate practice — staffed by the same team, run with the same care, sized to your day."
+      />
+      <Services />
+    </>
   );
 }
