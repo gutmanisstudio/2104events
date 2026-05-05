@@ -49,6 +49,7 @@ export default function Hero() {
 
   return (
     <section
+      className="hero-section"
       style={{
         minHeight: "100vh",
         padding: "96px 24px 24px",
@@ -134,7 +135,7 @@ export default function Hero() {
 
             <Reveal delay={60}>
               <h1
-                className="serif"
+                className="serif hero-title"
                 style={{
                   fontSize: "clamp(72px, 9.5vw, 168px)",
                   lineHeight: 0.88,
@@ -363,6 +364,7 @@ export default function Hero() {
 
               {/* Spinning sticker */}
               <div
+                className="hero-collage-sticker"
                 style={{
                   position: "absolute",
                   top: "40%",
@@ -437,7 +439,14 @@ export default function Hero() {
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
         .hero-cta:hover .hero-cta-arrow { transform: rotate(45deg) scale(1.15); }
         @media (max-width: 900px) {
-          .hero-grid { grid-template-columns: 1fr !important; }
+          .hero-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+        }
+        @media (max-width: 600px) {
+          .hero-section { padding: 88px 16px 16px !important; }
+          .hero-title { font-size: clamp(44px, 13vw, 64px) !important; }
+          .hero-grid > div:first-child { min-height: 0 !important; gap: 24px !important; }
+          .hero-grid > div:last-child { min-height: 460px !important; }
+          .hero-collage-sticker { left: 8px !important; width: 84px !important; height: 84px !important; }
         }
       `}</style>
     </section>

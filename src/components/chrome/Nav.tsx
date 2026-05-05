@@ -66,6 +66,8 @@ export default function Nav() {
   return (
     <>
       <header
+        className="site-nav"
+        data-scrolled={scrolled || undefined}
         style={{
           position: "fixed",
           top: 0,
@@ -262,6 +264,13 @@ export default function Nav() {
           </div>
         </div>
       </header>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .site-nav { padding: 16px 16px !important; }
+          .site-nav[data-scrolled] { padding: 12px 16px !important; }
+        }
+      `}</style>
 
       {/* Mobile overlay */}
       {menuOpen && (

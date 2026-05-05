@@ -28,7 +28,7 @@ export default function AboutBlock() {
           <div style={{ position: "relative" }}>
             <Media
               src={MEDIA.babyshower_2}
-              caption="JOSE, FOUNDER · STUDIO PORTRAIT"
+              caption={lang === "EN" ? "JOSE, FOUNDER · STUDIO PORTRAIT" : "JOSE, GRUNNLEGGER · STUDIO-PORTRETT"}
               ratio="4 / 5"
             />
             <div
@@ -42,7 +42,7 @@ export default function AboutBlock() {
             >
               <Media
                 src={MEDIA.babyshower_4}
-                caption="STUDIO · LAKKEGATA 4"
+                caption={lang === "EN" ? "STUDIO · LAKKEGATA 4" : "STUDIO · LAKKEGATA 4"}
                 ratio="1 / 1"
               />
             </div>
@@ -106,6 +106,7 @@ export default function AboutBlock() {
 
           <Reveal delay={220}>
             <div
+              className="about-stats"
               style={{
                 marginTop: 56,
                 display: "grid",
@@ -166,6 +167,7 @@ export default function AboutBlock() {
       <style>{`
         @media (max-width: 900px) {
           .about-grid { grid-template-columns: 1fr !important; gap: 60px !important; }
+          .about-stats { grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
         }
       `}</style>
     </section>

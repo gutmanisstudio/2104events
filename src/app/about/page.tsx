@@ -38,13 +38,13 @@ export default function AboutPage() {
           }}
         >
           {[
-            { src: MEDIA.babyshower_1, label: "Studio · Lakkegata", rot: -3 },
-            { src: MEDIA.babyshower_2, label: "Jose, founder", rot: 2 },
-            { src: MEDIA.foodmenu, label: "On the night · BTS", rot: -1 },
-            { src: MEDIA.babyshower_4, label: "Setup · 06:00", rot: 4 },
+            { src: MEDIA.babyshower_1, en: "Studio · Lakkegata", no: "Studio · Lakkegata", rot: -3 },
+            { src: MEDIA.babyshower_2, en: "Jose, founder", no: "Jose, grunnlegger", rot: 2 },
+            { src: MEDIA.foodmenu, en: "On the night · BTS", no: "På kvelden · BTS", rot: -1 },
+            { src: MEDIA.babyshower_4, en: "Setup · 06:00", no: "Oppsett · 06:00", rot: 4 },
           ].map((p, i) => (
             <Reveal key={i} delay={i * 80}>
-              <Polaroid src={p.src} label={p.label} rotate={p.rot} width={240} />
+              <Polaroid src={p.src} label={lang === "EN" ? p.en : p.no} rotate={p.rot} width={240} />
             </Reveal>
           ))}
         </div>

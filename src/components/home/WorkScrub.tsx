@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Media from "@/components/primitives/Media";
+import Reveal from "@/components/primitives/Reveal";
 import { COPY } from "@/content/copy";
 import { MEDIA } from "@/content/media";
 import { useLocale } from "@/hooks/useLocale";
@@ -39,8 +40,18 @@ export default function WorkScrub() {
 
   const wrapRef = useRef<HTMLElement | null>(null);
   const [progress, setProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const mql = window.matchMedia("(max-width: 900px)");
+    const update = () => setIsMobile(mql.matches);
+    update();
+    mql.addEventListener("change", update);
+    return () => mql.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
     let raf = 0;
     const onScroll = () => {
       cancelAnimationFrame(raf);
@@ -59,7 +70,7 @@ export default function WorkScrub() {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
     };
-  }, []);
+  }, [isMobile]);
 
   const cardW = 520;
   const gap = 32;
@@ -71,6 +82,86 @@ export default function WorkScrub() {
   const titleParts = copy.work.title.split(" ");
   const titleHead = titleParts.slice(0, -2).join(" ");
   const titleTail = titleParts.slice(-2).join(" ");
+
+  if (isMobile) {
+    return (
+      <section
+        id="work"
+        style={{
+          padding: "100px 24px",
+          background: "var(--bg)",
+        }}
+      >
+        <div style={{ maxWidth: 1320, margin: "0 auto" }}>
+          <div
+            className="mono"
+            style={{ color: "var(--fg-mute)", marginBottom: 16 }}
+          >
+            — {copy.work.eyebrow}
+          </div>
+          <h2
+            className="serif"
+            style={{
+              fontSize: "clamp(36px, 9vw, 64px)",
+              lineHeight: 1,
+              margin: 0,
+              fontWeight: 300,
+              letterSpacing: "-0.035em",
+              marginBottom: 40,
+            }}
+          >
+            {titleHead}{" "}
+            <em style={{ fontStyle: "italic", color: "var(--accent)" }}>
+              {titleTail}
+            </em>
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 48 }}>
+            {projects.map((p, i) => (
+              <Reveal key={i} delay={i * 40}>
+                <div data-hover>
+                  <Media
+                    src={p.src}
+                    video={p.video}
+                    caption={p.k}
+                    ratio="3 / 4"
+                    style={{ width: "100%" }}
+                  />
+                  <div style={{ paddingTop: 16 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        marginBottom: 8,
+                        gap: 12,
+                      }}
+                    >
+                      <span className="mono" style={{ color: "var(--accent)" }}>
+                        {String(i + 1).padStart(2, "0")} · {p.cat}
+                      </span>
+                      <span className="mono" style={{ color: "var(--fg-mute)" }}>
+                        {p.m}
+                      </span>
+                    </div>
+                    <h3
+                      className="serif"
+                      style={{
+                        fontSize: 22,
+                        fontWeight: 400,
+                        margin: 0,
+                        letterSpacing: "-0.02em",
+                      }}
+                    >
+                      {p.k}
+                    </h3>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

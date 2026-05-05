@@ -1,5 +1,12 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 
 export type Lang = "EN" | "NO";
 
@@ -16,7 +23,10 @@ function writeCookie(lang: Lang) {
   document.cookie = `${COOKIE_KEY}=${lang}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
 }
 
-export function useLocale() {
+type Ctx = readonly [Lang, (next: Lang) => void];
+const LocaleCtx = createContext<Ctx | null>(null);
+
+export function LocaleProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("EN");
 
   useEffect(() => {
@@ -28,5 +38,17 @@ export function useLocale() {
     setLangState(next);
   }, []);
 
-  return [lang, setLang] as const;
+  return (
+    <LocaleCtx.Provider value={[lang, setLang] as const}>
+      {children}
+    </LocaleCtx.Provider>
+  );
+}
+
+export function useLocale(): Ctx {
+  const ctx = useContext(LocaleCtx);
+  if (!ctx) {
+    return ["EN" as Lang, () => {}] as const;
+  }
+  return ctx;
 }

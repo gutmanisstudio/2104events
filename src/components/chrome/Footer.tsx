@@ -21,6 +21,7 @@ export default function Footer() {
 
   return (
     <footer
+      className="footer-root"
       style={{
         background: "var(--bg-2)",
         color: "var(--fg)",
@@ -31,7 +32,7 @@ export default function Footer() {
     >
       <div style={{ maxWidth: 1440, margin: "0 auto" }}>
         <div
-          className="grid gap-10 mb-20"
+          className="footer-cols grid gap-10 mb-20"
           style={{ gridTemplateColumns: "1.4fr 1fr 1fr 1fr" }}
         >
           <div>
@@ -158,6 +159,17 @@ export default function Footer() {
           <span>{copy.footer.built}</span>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .footer-root { padding: 80px 20px 28px !important; }
+          .footer-cols { grid-template-columns: 1fr 1fr !important; gap: 32px !important; margin-bottom: 56px !important; }
+          .footer-cols > div:first-child { grid-column: 1 / -1; }
+        }
+        @media (max-width: 520px) {
+          .footer-cols { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </footer>
   );
 }

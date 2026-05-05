@@ -3,8 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Media from "@/components/primitives/Media";
 import { MEDIA } from "@/content/media";
+import { useLocale } from "@/hooks/useLocale";
 
 export default function DetailStrip() {
+  const [lang] = useLocale();
+  const cap1 = lang === "EN" ? "TABLESCAPE DETAIL · IVORY LINEN" : "BORDDETALJ · ELFENBENS-LIN";
+  const cap2 = lang === "EN" ? "FLORAL — GARDEN ROSE & EUCALYPTUS" : "BLOMSTER — HAGEROSE & EUKALYPTUS";
+  const cap3 = lang === "EN" ? "CALLIGRAPHY · MENU CARD" : "KALLIGRAFI · MENYKORT";
   const wrapRef = useRef<HTMLElement | null>(null);
   const [t, setT] = useState(0);
 
@@ -44,25 +49,13 @@ export default function DetailStrip() {
         }}
       >
         <div style={{ transform: `translateY(${-t * 60}px)` }}>
-          <Media
-            src={MEDIA.babyshower_3}
-            caption="TABLESCAPE DETAIL · IVORY LINEN"
-            ratio="3 / 4"
-          />
+          <Media src={MEDIA.babyshower_3} caption={cap1} ratio="3 / 4" />
         </div>
         <div style={{ transform: `translateY(${t * 30}px)`, marginTop: 60 }}>
-          <Media
-            src={MEDIA.foodmenu}
-            caption="FLORAL — GARDEN ROSE & EUCALYPTUS"
-            ratio="3 / 4"
-          />
+          <Media src={MEDIA.foodmenu} caption={cap2} ratio="3 / 4" />
         </div>
         <div style={{ transform: `translateY(${-t * 80}px)` }}>
-          <Media
-            src={MEDIA.babyshower_1}
-            caption="CALLIGRAPHY · MENU CARD"
-            ratio="3 / 4"
-          />
+          <Media src={MEDIA.babyshower_1} caption={cap3} ratio="3 / 4" />
         </div>
       </div>
       <style>{`

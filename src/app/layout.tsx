@@ -4,6 +4,7 @@ import LenisRoot from "@/components/chrome/LenisRoot";
 import CursorDot from "@/components/primitives/CursorDot";
 import Nav from "@/components/chrome/Nav";
 import Footer from "@/components/chrome/Footer";
+import { LocaleProvider } from "@/hooks/useLocale";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,12 +22,14 @@ export default function RootLayout({
       className={`${fraunces.variable} ${geist.variable} ${mono.variable}`}
     >
       <body>
-        <LenisRoot>
-          <Nav />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-        </LenisRoot>
-        <CursorDot />
+        <LocaleProvider>
+          <LenisRoot>
+            <Nav />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+          </LenisRoot>
+          <CursorDot />
+        </LocaleProvider>
       </body>
     </html>
   );

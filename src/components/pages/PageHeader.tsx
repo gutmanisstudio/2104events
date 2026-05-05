@@ -10,12 +10,14 @@ type PageHeaderProps = {
 export default function PageHeader({ eyebrow, title, lede, stamp }: PageHeaderProps) {
   return (
     <section
+      className="page-header"
       style={{
         padding: "180px 24px 60px",
         position: "relative",
       }}
     >
       <div
+        className="page-header-grid"
         style={{
           maxWidth: 1320,
           margin: "0 auto",
@@ -123,6 +125,12 @@ export default function PageHeader({ eyebrow, title, lede, stamp }: PageHeaderPr
           </Reveal>
         )}
       </div>
+      <style>{`
+        @media (max-width: 900px) {
+          .page-header { padding: 120px 20px 40px !important; }
+          .page-header-grid { grid-template-columns: 1fr !important; gap: 24px !important; align-items: flex-start !important; }
+        }
+      `}</style>
     </section>
   );
 }

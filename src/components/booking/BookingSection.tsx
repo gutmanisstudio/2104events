@@ -486,6 +486,11 @@ export default function BookingSection() {
         @media (max-width: 900px) {
           .booking-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
         }
+        @media (max-width: 600px) {
+          #booking { padding: 100px 20px !important; }
+          #booking [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+          #booking [style*="repeat(3, 1fr)"] { grid-template-columns: 1fr !important; }
+        }
       `}</style>
     </section>
   );

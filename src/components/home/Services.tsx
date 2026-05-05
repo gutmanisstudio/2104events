@@ -94,10 +94,22 @@ export default function Services() {
                 maxWidth: 200,
               }}
             >
-              <div style={{ fontWeight: 700 }}>NO. TWO OF US</div>
-              <div>IN THE ROOM AT</div>
-              <div>EVERY EVENT.</div>
-              <div style={{ marginTop: 6, fontSize: 8, opacity: 0.7 }}>— ALWAYS</div>
+              {(lang === "EN"
+                ? ["NO. TWO OF US", "IN THE ROOM AT", "EVERY EVENT.", "— ALWAYS"]
+                : ["NO. TO AV OSS", "I ROMMET PÅ", "HVERT ARRANGEMENT.", "— ALLTID"]
+              ).map((line, i, arr) => (
+                <div
+                  key={i}
+                  style={{
+                    fontWeight: i === 0 ? 700 : 400,
+                    marginTop: i === arr.length - 1 ? 6 : 0,
+                    fontSize: i === arr.length - 1 ? 8 : undefined,
+                    opacity: i === arr.length - 1 ? 0.7 : 1,
+                  }}
+                >
+                  {line}
+                </div>
+              ))}
             </div>
           </div>
         </Reveal>
